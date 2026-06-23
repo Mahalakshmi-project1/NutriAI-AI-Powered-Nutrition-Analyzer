@@ -3,16 +3,136 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NutriAI - AI-Powered Nutrition Analyzer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#10B981" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1f2937" media="(prefers-color-scheme: dark)" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="NutriAI" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="NutriAI" />
+    <meta name="msapplication-TileColor" content="#10B981" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <title>NutriAI - Your Personal AI Nutrition Assistant</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Track meals, analyze BMI, and get personalized AI-powered diet recommendations for a healthier lifestyle." />
+    <meta name="keywords" content="nutrition, diet, health, AI, meal tracking, BMI, fitness, Indian food, healthy eating" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="NutriAI - AI-Powered Nutrition Assistant" />
+    <meta property="og:description" content="Your Personal AI Nutrition Assistant for a healthier lifestyle." />
+    <meta property="og:type" content="website" />
     <meta property="og:image" content="https://bolt.new/static/og_default.png">
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NutriAI - AI-Powered Nutrition Assistant">
+    <meta name="twitter:description" content="Your Personal AI Nutrition Assistant for a healthier lifestyle.">
     <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
-  <script type="module" crossorigin src="/assets/index-CqfWaMX7.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-BUgPQI9b.css">
-</head>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <style>
+      /* Critical CSS for instant loading */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Splash screen styles */
+      #splash-screen {
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(135deg, #10B981 0%, #059669 50%, #047857 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease-out;
+      }
+
+      #splash-screen.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .splash-logo {
+        width: 96px;
+        height: 96px;
+        background: white;
+        border-radius: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+        animation: bounce 1s ease infinite;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+
+      .splash-logo svg {
+        width: 48px;
+        height: 48px;
+        color: #10B981;
+      }
+
+      .splash-title {
+        color: white;
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .splash-tagline {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 16px;
+      }
+
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+    </style>
+    <script type="module" crossorigin src="/NutriAI-AI-Powered-Nutrition-Analyzer/assets/index-Bl-hIqtG.js"></script>
+    <link rel="stylesheet" crossorigin href="/NutriAI-AI-Powered-Nutrition-Analyzer/assets/index-B-RRp47u.css">
+  </head>
   <body>
+    <!-- Native Splash Screen (shown before React loads) -->
+    <div id="splash-screen">
+      <div class="splash-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a4 4 0 0 0-4 4c0 1.5.8 2.8 2 3.5V22h4V9.5c1.2-.7 2-2 2-3.5a4 4 0 0 0-4-4Z"/>
+          <path d="M12 2v2"/>
+        </svg>
+      </div>
+      <div class="splash-title">NutriAI</div>
+      <div class="splash-tagline">Your Personal AI Nutrition Assistant</div>
+    </div>
+
     <div id="root"></div>
+
+    <script>
+      // Hide native splash screen when React is ready
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var splash = document.getElementById('splash-screen');
+          if (splash) {
+            splash.classList.add('hidden');
+            setTimeout(function() {
+              splash.remove();
+            }, 500);
+          }
+        }, 100);
+      });
+    </script>
   </body>
 </html>
