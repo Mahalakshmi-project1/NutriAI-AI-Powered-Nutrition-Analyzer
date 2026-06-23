@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
 import { User, Session } from '@supabase/supabase-js'
-import { supabase } from '../lib/supabase'
+import { getSupabase } from '../lib/supabase'
 import { UserProfile } from '../types/database'
 
 interface AuthContextType {
@@ -23,7 +23,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
 
+  const supabase = getSupabase()
+
   useEffect(() => {
+    if (!supabase) {
+      setLoading(false)
+      return
+    }
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
       setUser(session?.user ?? null)
@@ -46,9 +53,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     })
 
     return () => subscription.unsubscribe()
-  }, [])
+  }, [supabase])
 
   async function fetchProfile(userId: string) {
+    if (!supabase) return
     try {
       const { data, error } = await supabase
         .from('user_profiles')
@@ -68,6 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function signUp(email: string, password: string, fullName: string) {
+    if (!supabase) return { error: new Error('Supabase not configured') }
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -101,6 +110,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function signIn(email: string, password: string) {
+    if (!supabase) return { error: new Error('Supabase not configured') }
     try {
       const { error } = await supabase.auth.signInWithPassword({
         email,
@@ -113,6 +123,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function signOut() {
+    if (!supabase) {
+      setUser(null)
+      setProfile(null)
+      setSession(null)
+      return
+    }
     await supabase.auth.signOut()
     setUser(null)
     setProfile(null)
@@ -120,6 +136,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function updateProfile(updates: Partial<UserProfile>) {
+    if (!supabase) return { error: new Error('Supabase not configured') }
     if (!user) return { error: new Error('No user logged in') }
 
     try {

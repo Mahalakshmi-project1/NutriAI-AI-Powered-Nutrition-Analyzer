@@ -46,6 +46,7 @@ export default function LandingPage() {
   }, [])
 
   async function fetchApprovedReviews() {
+    if (!supabase) return
     try {
       const { data } = await supabase
         .from('contact_submissions')
@@ -137,19 +138,21 @@ export default function LandingPage() {
 
     try {
       // Save to Supabase
-      const { error: dbError } = await supabase
-        .from('contact_submissions')
-        .insert({
-          name: contactForm.name,
-          email: contactForm.email,
-          subject: contactForm.subject,
-          message: contactForm.message,
-          is_review: false,
-          is_approved: false,
-          reply_sent: false,
-        })
+      if (supabase) {
+        const { error: dbError } = await supabase
+          .from('contact_submissions')
+          .insert({
+            name: contactForm.name,
+            email: contactForm.email,
+            subject: contactForm.subject,
+            message: contactForm.message,
+            is_review: false,
+            is_approved: false,
+            reply_sent: false,
+          })
 
-      if (dbError) throw dbError
+        if (dbError) throw dbError
+      }
 
       // ─── 1. Send admin notification via EmailJS ───
       let adminNotificationSuccess = false
@@ -198,13 +201,15 @@ export default function LandingPage() {
           console.log('[Contact] SUCCESS: Auto-reply sent to', contactForm.email)
           autoReplySuccess = true
           // Mark reply_sent in Supabase
-          await supabase
-            .from('contact_submissions')
-            .update({ reply_sent: true })
-            .eq('email', contactForm.email)
-            .eq('reply_sent', false)
-            .order('created_at', { ascending: false })
-            .limit(1)
+          if (supabase) {
+            await supabase
+              .from('contact_submissions')
+              .update({ reply_sent: true })
+              .eq('email', contactForm.email)
+              .eq('reply_sent', false)
+              .order('created_at', { ascending: false })
+              .limit(1)
+          }
         } catch (replyErr: any) {
           console.error('[Contact] FAILED: Auto-reply:', replyErr?.text || replyErr?.message || replyErr)
         }
