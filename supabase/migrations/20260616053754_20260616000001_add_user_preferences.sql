@@ -1,0 +1,3 @@
+ALTER TABLE user_profiles 
+ADD COLUMN IF NOT EXISTS dark_mode BOOLEAN DEFAULT false,
+ADD COLUMN IF NOT EXISTS notifications_enabled BOOLEAN DEFAULT true;

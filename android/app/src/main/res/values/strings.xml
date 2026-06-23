@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">NutriAI</string>
+    <string name="title_activity_main">NutriAI</string>
+    <string name="package_name">com.nutriai.app</string>
+    <string name="custom_url_scheme">nutriai</string>
+    <string name="app_description">Your Personal AI Nutrition Assistant</string>
+
+    <!-- Notification Channels -->
+    <string name="notification_channel_id">nutriai-notifications</string>
+    <string name="notification_channel_name">NutriAI Reminders</string>
+    <string name="notification_channel_description">Reminders for water, meals, exercise, and health tips</string>
+
+    <!-- Deep Link Hosts -->
+    <string name="deep_link_host">nutriai.app</string>
+</resources>
