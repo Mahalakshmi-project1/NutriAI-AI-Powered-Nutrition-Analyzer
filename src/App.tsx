@@ -198,13 +198,15 @@ function AppContent() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <ThemeProvider>
-          <Toast />
-          <AppContent />
-        </ThemeProvider>
-      </AuthProvider>
-    </BrowserRouter>
+   <BrowserRouter>
+  <AuthProvider>
+    <ThemeProvider>
+      <NotificationProvider>
+        <Toast />
+        <AppContent />
+      </NotificationProvider>
+    </ThemeProvider>
+  </AuthProvider>
+</BrowserRouter>
   )
 }
